@@ -1,0 +1,27 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:production.bom.reverse_tree.open.tree,bom_tree:"
+msgid "BOM Tree"
+msgstr "Arbre de l'escandall"
+
+msgctxt "field:production.bom.reverse_tree.open.tree,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "model:ir.action,name:wizard_bom_reverse_tree_open"
+msgid "Reverse BOM Tree"
+msgstr "Arbre de l'escandall invers"
+
+msgctxt "model:production.bom.reverse_tree.open.tree,name:"
+msgid "Open Reverse BOM Tree Tree"
+msgstr "Obre arbre de l'escandall invers"
+
+msgctxt "view:production.bom.tree.open.tree:"
+msgid "Reverse BOM Tree"
+msgstr "Arbre de l'escandall invers"
+
+msgctxt "wizard_button:production.bom.reverse_tree.open,tree,end:"
+msgid "Close"
+msgstr "Tanca"
