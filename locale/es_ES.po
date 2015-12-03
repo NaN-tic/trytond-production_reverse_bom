@@ -10,7 +10,19 @@ msgctxt "field:production.bom.reverse_tree.open.tree,id:"
 msgid "ID"
 msgstr "Identificador"
 
-msgctxt "model:ir.action,name:wizard_bom_reverse_tree_open"
+msgctxt "model:ir.action,name:"
+msgid "Reverse BOM Tree"
+msgstr "Árbol lista de material inverso"
+
+msgctxt "model:ir.action,name:act_reverse_bom_list"
+msgid "Reverse BOMs"
+msgstr "Árbol lista de material inverso"
+
+msgctxt "model:ir.action,name:wizard_bom_reverse_tree"
+msgid "Reverse BOM Tree"
+msgstr "Árbol lista de material inverso"
+
+msgctxt "model:ir.action,name:wizard_bom_tree_from_reverse"
 msgid "Reverse BOM Tree"
 msgstr "Árbol lista de material inverso"
 
@@ -22,6 +34,22 @@ msgctxt "view:production.bom.tree.open.tree:"
 msgid "Reverse BOM Tree"
 msgstr "Árbol lista de material inverso"
 
-msgctxt "wizard_button:production.bom.reverse_tree.open,tree,end:"
+msgctxt "view:production.bom:"
+msgid "BOMs"
+msgstr "Listas de material"
+
+msgctxt "wizard_button:production.bom.tree.from_reverse,start,end:"
+msgid "Cancel"
+msgstr "Cancel·lar"
+
+msgctxt "wizard_button:production.bom.tree.from_reverse,start,tree:"
+msgid "Ok"
+msgstr "Aceptar"
+
+msgctxt "wizard_button:production.bom.tree.from_reverse,tree,end:"
 msgid "Close"
 msgstr "Cerrar"
+
+msgctxt "wizard_button:production.bom.tree.from_reverse,tree,start:"
+msgid "Change"
+msgstr "Cambiar"

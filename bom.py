@@ -1,12 +1,14 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 from trytond.model import ModelView, fields
-from trytond.wizard import Wizard, StateView, Button
+from trytond.wizard import Wizard, StateAction
 from trytond.transaction import Transaction
 from trytond.pool import Pool, PoolMeta
+from trytond.modules.production.bom import OpenBOMTree
 
 
-__all__ = ['BOMTree', 'OpenReverseBOMTreeTree', 'OpenReverseBOMTree']
+__all__ = ['BOMTree', 'OpenReverseBOMTreeTree', 'OpenReverseBOMTree',
+    'OpenBOMTreeFromReverse']
 __metaclass__ = PoolMeta
 
 
@@ -14,34 +16,24 @@ class BOMTree:
     __name__ = 'production.bom.tree'
 
     @classmethod
-    def reverse_tree(cls, product):
+    def reverse_boms(cls, product):
         Input = Pool().get('production.bom.input')
 
+        boms = set([i.bom for i in Input.search([
+                        ('product', '=', product.id),
+                        ])])
         result = []
-        boms = list(set([i.bom for i in Input.search([
-                            ('product', '=', product.id),
-                            ])]))
         processed = set()
         latter = set()
         for bom in boms:
             for product in bom.output_products:
-                childs = cls.tree(product, 1.0, product.default_uom)
-                values = {
-                    'product': product.id,
-                    'quantity': 1.0,
-                    'uom': product.default_uom.id,
-                    'unit_digits': product.default_uom.digits,
-                    'childs': childs,
-                }
-                result.append(values)
-                processed.add(product.id)
                 latter.add(product)
+            result.append(bom.id)
         # Search for nesteed boms. Do it at the end for a better sorting
         for product in latter:
-            for parent_bom in cls.reverse_tree(product):
-                if parent_bom['product'] not in processed:
-                    result.append(parent_bom)
-                    processed.add(parent_bom['product'])
+            nested = cls.reverse_boms(product)
+            processed |= set(nested)
+            result.extend(nested)
         return result
 
 
@@ -52,28 +44,36 @@ class OpenReverseBOMTreeTree(ModelView):
     bom_tree = fields.One2Many('production.bom.tree', None, 'BOM Tree',
         readonly=True)
 
-    @classmethod
-    def reverse_tree(cls, product):
-        pool = Pool()
-        Tree = pool.get('production.bom.tree')
-        return {
-            'bom_tree': Tree.reverse_tree(product),
-            }
-
 
 class OpenReverseBOMTree(Wizard):
     'Open Reverse BOM Tree'
     __name__ = 'production.bom.reverse_tree.open'
-    start_state = 'tree'
 
-    tree = StateView('production.bom.reverse_tree.open.tree',
-        'production.bom_tree_open_tree_view_form', [
-            Button('Close', 'end', 'tryton-close'),
-            ])
+    start = StateAction('production_reverse_bom.act_reverse_bom_list')
 
-    def default_tree(self, fields):
+    def do_start(self, action):
         pool = Pool()
-        Product = Pool().get('product.product')
-        BomTree = pool.get('production.bom.reverse_tree.open.tree')
+        Product = pool.get('product.product')
+        BomTree = pool.get('production.bom.tree')
         product = Product(Transaction().context['active_id'])
-        return BomTree.reverse_tree(product)
+        data = {}
+        data['res_id'] = BomTree.reverse_boms(product)
+        return action, data
+
+
+class OpenBOMTreeFromReverse(OpenBOMTree):
+    'Open BOM Tree From Bom'
+    __name__ = 'production.bom.tree.from_reverse'
+
+    def _execute(self, state_name):
+        pool = Pool()
+        Bom = pool.get('production.bom')
+        if Transaction().context.get('active_model') != 'production.bom':
+            return super(OpenBOMTreeFromReverse, self)._execute(state_name)
+        bom = Bom(Transaction().context['active_id'])
+        product_id = None
+        if bom.outputs:
+            product_id = bom.outputs[0].product.id
+        with Transaction().set_context(active_id=product_id,
+                active_model='product.product'):
+            return super(OpenBOMTreeFromReverse, self)._execute(state_name)
