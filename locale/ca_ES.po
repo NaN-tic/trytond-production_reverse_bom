@@ -2,33 +2,25 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "field:production.bom.reverse_tree.open.tree,bom_tree:"
-msgid "BOM Tree"
-msgstr "Arbre de l'escandall"
-
-msgctxt "field:production.bom.reverse_tree.open.tree,id:"
-msgid "ID"
-msgstr "Identificador"
+msgctxt "field:product.product,output_products:"
+msgid "products"
+msgstr "productos"
 
 msgctxt "model:ir.action,name:"
 msgid "Reverse BOM Tree"
 msgstr "Arbre de l'escandall invers"
 
-msgctxt "model:ir.action,name:act_reverse_bom_list"
+msgctxt "model:ir.action,name:act_product_reverse_bom"
 msgid "Reverse BOMs"
-msgstr "Arbre de l'escandall Invers"
+msgstr "Llistes de materials inverses"
 
 msgctxt "model:ir.action,name:wizard_bom_reverse_tree"
 msgid "Reverse BOM Tree"
 msgstr "Arbre de l'escandall invers"
 
-msgctxt "model:ir.action,name:wizard_bom_tree_from_reverse"
-msgid "Reverse BOM Tree"
-msgstr "Arbre de l'escandall invers"
-
-msgctxt "model:production.bom.reverse_tree.open.tree,name:"
-msgid "Open Reverse BOM Tree Tree"
-msgstr "Obre arbre de l'escandall invers"
+msgctxt "view:product.product:"
+msgid "BOMs"
+msgstr "Llistes de materials"
 
 msgctxt "view:production.bom.tree.open.tree:"
 msgid "Reverse BOM Tree"
@@ -37,19 +29,3 @@ msgstr "Arbre de l'escandall invers"
 msgctxt "view:production.bom:"
 msgid "BOMs"
 msgstr "Llistes de materials"
-
-msgctxt "wizard_button:production.bom.tree.from_reverse,start,end:"
-msgid "Cancel"
-msgstr "Cancel·lat"
-
-msgctxt "wizard_button:production.bom.tree.from_reverse,start,tree:"
-msgid "Ok"
-msgstr "D'acord"
-
-msgctxt "wizard_button:production.bom.tree.from_reverse,tree,end:"
-msgid "Close"
-msgstr "Tanca"
-
-msgctxt "wizard_button:production.bom.tree.from_reverse,tree,start:"
-msgid "Change"
-msgstr "Canvia"

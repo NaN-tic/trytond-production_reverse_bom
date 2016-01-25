@@ -4,35 +4,22 @@
 <tryton>
     <data>
 
-        <record model="ir.ui.view" id="bom_view_list">
-            <field name="model">production.bom</field>
+        <record model="ir.ui.view" id="product_reverse_bom_view_list">
+            <field name="model">product.product</field>
             <field name="type">tree</field>
-            <field name="name">bom_list</field>
+            <field name="name">product_reverse_bom_list</field>
+            <field name="field_childs">output_products</field>
         </record>
 
-        <record model="ir.action.act_window" id="act_reverse_bom_list">
+        <record model="ir.action.act_window" id="act_product_reverse_bom">
             <field name="name">Reverse BOMs</field>
-            <field name="res_model">production.bom</field>
+            <field name="res_model">product.product</field>
         </record>
-        <record model="ir.action.act_window.view" id="act_bom_list_view1">
+        <record model="ir.action.act_window.view"
+                id="act_product_reverse_bom_view1">
             <field name="sequence" eval="10"/>
-            <field name="view" ref="bom_view_list"/>
-            <field name="act_window" ref="act_reverse_bom_list"/>
-        </record>
-        <record model="ir.action.act_window.view" id="act_bom_list_view2">
-            <field name="sequence" eval="20"/>
-            <field name="view" ref="production.bom_view_form"/>
-            <field name="act_window" ref="act_reverse_bom_list"/>
-        </record>
-        <record model="ir.action.wizard" id="wizard_bom_tree_from_reverse">
-            <field name="name">BOM Tree</field>
-            <field name="wiz_name">production.bom.tree.from_reverse</field>
-            <field name="window" eval="True"/>
-        </record>
-        <record model="ir.action.keyword" id="act_open_bom_keyword">
-            <field name="keyword">tree_open</field>
-            <field name="model">production.bom,-1</field>
-            <field name="action" ref="wizard_bom_tree_from_reverse"/>
+            <field name="view" ref="product_reverse_bom_view_list"/>
+            <field name="act_window" ref="act_product_reverse_bom"/>
         </record>
         <record model="ir.action.wizard" id="wizard_bom_reverse_tree">
             <field name="name">Reverse BOM Tree</field>

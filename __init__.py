@@ -6,10 +6,8 @@ from .bom import *
 
 def register():
     Pool.register(
-        BOMTree,
-        OpenReverseBOMTreeTree,
+        Product,
         module='production_reverse_bom', type_='model')
     Pool.register(
         OpenReverseBOMTree,
-        OpenBOMTreeFromReverse,
         module='production_reverse_bom', type_='wizard')
