@@ -22,7 +22,7 @@ class Product:
         Input = pool.get('production.bom.input')
         inputs = Input.search([
                 ('product', 'in', [x.id for x in products]),
-            ])
+                ])
         output_products = {}
         for product in products:
             output_products[product.id] = []
