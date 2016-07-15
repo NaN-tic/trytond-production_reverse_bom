@@ -40,5 +40,5 @@ class OpenReverseBOMTree(Wizard):
     start = StateAction('production_reverse_bom.act_product_reverse_bom')
 
     def do_start(self, action):
-        data = {'res_id': Transaction().context['active_id']}
+        data = {'res_id': Transaction().context['active_ids']}
         return action, data

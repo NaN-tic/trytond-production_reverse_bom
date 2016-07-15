@@ -2,30 +2,105 @@
 # copyright notices and license terms.
 import unittest
 import doctest
+from decimal import Decimal
+
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import test_view, test_depends
+from trytond.pool import Pool
+from trytond.tests.test_tryton import ModuleTestCase, with_transaction
 from trytond.tests.test_tryton import doctest_setup, doctest_teardown
+from trytond.tests.test_tryton import doctest_checker
+
+from trytond.modules.company.tests import create_company, set_company
 
 
-class TestCase(unittest.TestCase):
+class TestCase(ModuleTestCase):
     'Test module'
+    module = 'production_reverse_bom'
 
-    def setUp(self):
-        trytond.tests.test_tryton.install_module('production_reverse_bom')
+    @with_transaction()
+    def test_account_debit_credit(self):
+        'Test get_output_products'
+        pool = Pool()
+        Uom = pool.get('product.uom')
+        Template = pool.get('product.template')
+        Product = pool.get('product.product')
+        Bom = pool.get('production.bom')
 
-    def test0005views(self):
-        'Test views'
-        test_view('production_reverse_bom')
+        # Create Company
+        company = create_company()
+        with set_company(company):
 
-    def test0006depends(self):
-        'Test depends'
-        test_depends()
+            # Create Product
+            unit, = Uom.search([
+                    ('name', '=', 'Unit'),
+                    ])
+            template, = Template.create([{
+                        'name': 'Product',
+                        'default_uom': unit.id,
+                        'type': 'goods',
+                        'list_price': Decimal(30),
+                        'cost_price': Decimal(20),
+                        }])
+            product, = Product.create([{
+                        'template': template.id,
+                        }])
+
+            # Create Components
+            template1, = Template.create([{
+                        'name': 'Component 1',
+                        'default_uom': unit.id,
+                        'type': 'goods',
+                        'list_price': Decimal(5),
+                        'cost_price': Decimal(1),
+                        }])
+            component1, = Product.create([{
+                        'template': template1.id,
+                        }])
+            meter, = Uom.search([
+                    ('name', '=', 'Meter'),
+                    ])
+            template2, = Template.create([{
+                        'name': 'Component 2',
+                        'default_uom': meter.id,
+                        'type': 'goods',
+                        'list_price': Decimal(7),
+                        'cost_price': Decimal(5),
+                        }])
+            component2, = Product.create([{
+                        'template': template2.id,
+                        }])
+
+            # Create Bill of Material
+            centimeter, = Uom.search([
+                    ('name', '=', 'centimeter'),
+                    ])
+            bom, = Bom.create([{
+                        'name': 'Product',
+                        'inputs': [('create', [{
+                                        'product': component1.id,
+                                        'quantity': 5.0,
+                                        'uom': unit.id,
+                                        }, {
+                                        'product': component2.id,
+                                        'quantity': 150.0,
+                                        'uom': centimeter.id,
+                                        }])],
+                        'outputs': [('create', [{
+                                        'product': product.id,
+                                        'quantity': 1.0,
+                                        'uom': unit.id,
+                                        }])],
+                        }])
+
+            output_products = Product.get_output_products([component1],
+                'output_products')[component1.id]
+            self.assertEqual(output_products, [product.id])
+            output_products = Product.get_output_products([component2],
+                'output_products')[component2.id]
+            self.assertEqual(output_products, [product.id])
 
 
 def suite():
     suite = trytond.tests.test_tryton.suite()
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCase))
-    suite.addTests(doctest.DocFileSuite('scenario_production_reverse_bom.rst',
-            setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
-            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
     return suite
