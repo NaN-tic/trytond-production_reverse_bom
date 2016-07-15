@@ -7,10 +7,10 @@ from trytond.pool import Pool, PoolMeta
 
 
 __all__ = ['Product', 'OpenReverseBOMTree']
-__metaclass__ = PoolMeta
 
 
 class Product:
+    __metaclass__ = PoolMeta
     __name__ = 'product.product'
     output_products = fields.Function(fields.One2Many('product.product', None,
             'products'),
