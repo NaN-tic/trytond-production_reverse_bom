@@ -101,8 +101,6 @@ Create Bill of Material::
 Open Reverse BOM for component::
 
     >>> reverse = Wizard('production.bom.reverse_tree.open', [component2])
-    >>> import pdb
-    >>> pdb.set_trace()
     >>> bom, = reverse.form.bom_tree
     >>> bom.product == product
     True
