@@ -1,13 +1,13 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 from trytond.pool import Pool
-from .bom import *
+from . import bom
 
 
 def register():
     Pool.register(
-        Product,
+        bom.Product,
         module='production_reverse_bom', type_='model')
     Pool.register(
-        OpenReverseBOMTree,
+        bom.OpenReverseBOMTree,
         module='production_reverse_bom', type_='wizard')

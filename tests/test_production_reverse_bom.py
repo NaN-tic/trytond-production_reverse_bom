@@ -3,22 +3,18 @@
 import unittest
 import doctest
 from decimal import Decimal
-
 import trytond.tests.test_tryton
 from trytond.pool import Pool
 from trytond.tests.test_tryton import ModuleTestCase, with_transaction
-from trytond.tests.test_tryton import doctest_setup, doctest_teardown
-from trytond.tests.test_tryton import doctest_checker
-
 from trytond.modules.company.tests import create_company, set_company
 
 
-class TestCase(ModuleTestCase):
+class ProductionReverseBomTestCase(ModuleTestCase):
     'Test module'
     module = 'production_reverse_bom'
 
     @with_transaction()
-    def test_account_debit_credit(self):
+    def test_production_reverse_bom(self):
         'Test get_output_products'
         pool = Pool()
         Uom = pool.get('product.uom')
@@ -102,5 +98,6 @@ class TestCase(ModuleTestCase):
 
 def suite():
     suite = trytond.tests.test_tryton.suite()
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCase))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(
+        ProductionReverseBomTestCase))
     return suite
