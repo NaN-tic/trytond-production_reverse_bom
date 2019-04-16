@@ -35,10 +35,10 @@ class ProductionReverseBomTestCase(ModuleTestCase):
                         'default_uom': unit.id,
                         'type': 'goods',
                         'list_price': Decimal(30),
-                        'cost_price': Decimal(20),
                         }])
             product, = Product.create([{
                         'template': template.id,
+                        'cost_price': Decimal(20),
                         }])
 
             # Create Components
@@ -47,10 +47,10 @@ class ProductionReverseBomTestCase(ModuleTestCase):
                         'default_uom': unit.id,
                         'type': 'goods',
                         'list_price': Decimal(5),
-                        'cost_price': Decimal(1),
                         }])
             component1, = Product.create([{
                         'template': template1.id,
+                        'cost_price': Decimal(1),
                         }])
             meter, = Uom.search([
                     ('name', '=', 'Meter'),
@@ -60,10 +60,11 @@ class ProductionReverseBomTestCase(ModuleTestCase):
                         'default_uom': meter.id,
                         'type': 'goods',
                         'list_price': Decimal(7),
-                        'cost_price': Decimal(5),
+
                         }])
             component2, = Product.create([{
                         'template': template2.id,
+                        'cost_price': Decimal(5),                        
                         }])
 
             # Create Bill of Material
