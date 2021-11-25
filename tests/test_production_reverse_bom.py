@@ -63,12 +63,12 @@ class ProductionReverseBomTestCase(ModuleTestCase):
                         }])
             component2, = Product.create([{
                         'template': template2.id,
-                        'cost_price': Decimal(5),                        
+                        'cost_price': Decimal(5),
                         }])
 
             # Create Bill of Material
             centimeter, = Uom.search([
-                    ('name', '=', 'centimeter'),
+                    ('symbol', '=', 'cm'),
                     ])
             bom, = Bom.create([{
                         'name': 'Product',
