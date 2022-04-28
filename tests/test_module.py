@@ -1,15 +1,16 @@
-# The COPYRIGHT file at the top level of this repository contains the full
-# copyright notices and license terms.
-import unittest
+
+# This file is part of Tryton.  The COPYRIGHT file at the top level of
+# this repository contains the full copyright notices and license terms.
+
 from decimal import Decimal
-import trytond.tests.test_tryton
 from trytond.pool import Pool
 from trytond.tests.test_tryton import ModuleTestCase, with_transaction
-from trytond.modules.company.tests import create_company, set_company
+from trytond.modules.company.tests import (CompanyTestMixin, create_company,
+    set_company)
 
 
-class ProductionReverseBomTestCase(ModuleTestCase):
-    'Test module'
+class ProductionReverseBomTestCase(CompanyTestMixin, ModuleTestCase):
+    'Test ProductionReverseBom module'
     module = 'production_reverse_bom'
 
     @with_transaction()
@@ -96,8 +97,4 @@ class ProductionReverseBomTestCase(ModuleTestCase):
             self.assertEqual(output_products, [product.id])
 
 
-def suite():
-    suite = trytond.tests.test_tryton.suite()
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(
-        ProductionReverseBomTestCase))
-    return suite
+del ModuleTestCase
