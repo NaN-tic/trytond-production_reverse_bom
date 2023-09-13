@@ -76,16 +76,16 @@ class ProductionReverseBomTestCase(CompanyTestMixin, ModuleTestCase):
                         'inputs': [('create', [{
                                         'product': component1.id,
                                         'quantity': 5.0,
-                                        'uom': unit.id,
+                                        'unit': unit.id,
                                         }, {
                                         'product': component2.id,
                                         'quantity': 150.0,
-                                        'uom': centimeter.id,
+                                        'unit': centimeter.id,
                                         }])],
                         'outputs': [('create', [{
                                         'product': product.id,
                                         'quantity': 1.0,
-                                        'uom': unit.id,
+                                        'unit': unit.id,
                                         }])],
                         }])
 
