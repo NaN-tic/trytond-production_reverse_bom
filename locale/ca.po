@@ -1,14 +1,10 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "field:product.product,output_products:"
 msgid "products"
 msgstr "productos"
-
-msgctxt "model:ir.action,name:"
-msgid "Reverse BOM Tree"
-msgstr "Arbre de l'escandall invers"
 
 msgctxt "model:ir.action,name:act_product_reverse_bom"
 msgid "Reverse BOMs"
