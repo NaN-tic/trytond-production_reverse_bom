@@ -21,6 +21,7 @@ class Product(metaclass=PoolMeta):
         Input = pool.get('production.bom.input')
         inputs = Input.search([
                 ('product', 'in', [x.id for x in products]),
+                ('bom.active', '=', True),
                 ])
         output_products = {}
         for product in products:
