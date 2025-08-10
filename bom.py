@@ -11,7 +11,7 @@ __all__ = ['Product', 'OpenReverseBOMTree']
 
 class Product(metaclass=PoolMeta):
     __name__ = 'product.product'
-    output_products = fields.Function(fields.One2Many('product.product', None,
+    output_products = fields.Function(fields.Many2Many('product.product', None,
             'products'),
         'get_output_products')
 
